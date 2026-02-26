@@ -1,0 +1,1571 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAM1BMVEUAAAD////////////////////////////////////////////////////////////////iYbZzAAAADXRSTlMAQGCAgMDG1Nnj8v+Qd5b8AAAAP0lEQVQY02WPSQ7AIAgEJ8n//2qg0l2m2a6GkQy7y3g1W7Z8E0k3o8G2aIipUj9E0C8mG6Qz9G0yJm8d0q8Qslv2Qy7h3k5wFq2eW0xjGq3w0Vh2H0S7z2kCFqgHd1I3yOqR4wAAAABJRU5ErkJggg==">
+    <title>rgch.e 🎨 Minecraft Commission</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root { --dark-bg:#111115; --dark-surface:#1E1E23; --light-text:#F0F0F0; --secondary-text:#AAAAAA; --accent-color:#FF6B00; --border-color:#333333; }
+        *{margin:0;padding:0;box-sizing:border-box}
+        html,body{min-height:100%}
+        body{font-family:'Poppins',sans-serif;background:var(--dark-bg);color:var(--light-text);line-height:1.6;scroll-behavior:smooth;opacity:1; padding-top:74px;}
+        /* Navbar */
+        .navbar{position:fixed;left:0;top:0;width:100%;padding:16px 16px;display:flex;justify-content:space-between;align-items:center;z-index:9999;background:rgba(17,17,21,.95);backdrop-filter:saturate(140%) blur(6px);box-shadow:0 2px 10px rgba(0,0,0,.5)}
+        .logo a{font-size:1.4em;font-weight:700;color:var(--accent-color);text-decoration:none}
+        .nav-links{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+        .nav-links a{color:var(--light-text);text-decoration:none;margin-left:0;font-weight:500;padding:6px 8px;border-radius:6px}
+        .nav-links a:hover{color:var(--accent-color);background:rgba(255,107,0,.08)}
+        .social-links{display:flex;align-items:center}
+        .social-links a{color:var(--secondary-text);margin-left:12px;font-size:1.2em}
+        .social-links a:hover{color:var(--accent-color)}
+        /* Hero */
+        .hero{min-height:92vh;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;background-size:cover;background-position:center}
+        .hero::before{content:"";position:absolute;inset:0;background:rgba(0,0,0,.6)}
+        .hero-content{position:relative;z-index:2;max-width:900px;padding:0 16px}
+        .hero-content h1{font-size:44px;font-weight:900;letter-spacing:.5px}
+        .hero-content h1 #commission-trigger{color:var(--accent-color);animation:colorPulse 1.5s infinite alternate}
+        @keyframes colorPulse{from{color:var(--accent-color)}to{color:#FFD700}}
+        .hero-content p{color:var(--secondary-text);margin:16px 0 28px}
+        .cta-button{background:var(--accent-color);color:#111;padding:12px 28px;border-radius:6px;text-decoration:none;font-weight:800;display:inline-block}
+        .section{padding:88px 16px;max-width:1200px;margin:0 auto}
+        .section h2{text-align:center;font-size:34px;margin-bottom:28px;position:relative}
+        .section h2::after{content:"";display:block;width:80px;height:3px;background:var(--accent-color);margin:12px auto 0}
+        .services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+        .service-card{background:var(--dark-surface);border:1px solid var(--border-color);border-radius:10px;padding:18px;text-align:center}
+        .service-card i{font-size:1.8em;color:var(--accent-color);margin-bottom:8px}
+        .service-card .cta-button{margin-top:12px}
+        #woPriceBox{background:#18181d;border:1px dashed #2b2b32;padding:10px;border-radius:10px;color:var(--secondary-text);font-size:14px}
+        
+        .pricelist-container{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+        .price-card{background:var(--dark-surface);border:2px solid var(--border-color);border-radius:12px;padding:22px;text-align:center}
+        .price-card.featured{border-color:var(--accent-color);box-shadow:0 10px 30px rgba(255,107,0,.25)}
+        .price-value{font-size:28px;color:var(--accent-color);font-weight:900;margin:8px 0 16px}
+        .price-card ul{list-style:none;text-align:left}
+        .price-card li{padding:8px 0;border-bottom:1px dashed #2b2b32;color:var(--secondary-text)}
+        .gallery-wrapper{background:var(--dark-surface);border:1px solid var(--border-color);border-radius:10px;padding:16px}
+        .gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+        .gallery-item{border:2px solid var(--border-color);border-radius:8px;overflow:hidden}
+        .gallery-item img{display:block;width:100%;height:180px;object-fit:cover}
+        .footer{padding:24px;text-align:center;color:var(--secondary-text)}
+        /* Promo/Gacha modal base (reused) */
+        .promo-modal{display:none;position:fixed;inset:0;z-index:4000;background:rgba(0,0,0,.85);backdrop-filter:blur(2px)}
+        .promo-modal.active{display:block}
+        .promo-modal-content{background:var(--dark-surface);border:3px solid var(--border-color);border-radius:10px;width:min(92%,520px);margin:8% auto;padding:24px}
+        /* Web order extra */
+        .order-choice-actions{display:flex;flex-direction:column;gap:12px}
+        .order-btn{padding:12px;border:none;border-radius:8px;font-weight:800;cursor:pointer}
+        .btn-discord{background:#5865F2;color:#fff}
+        .btn-web{background:var(--accent-color);color:#111}
+        .btn-cancel{background:#333;color:#fff}
+        .form-group{margin-bottom:12px;text-align:left}
+        .form-group label{display:block;margin-bottom:6px}
+        .form-group input,.form-group select,.form-group textarea{width:100%;background:#282830;color:#fff;border:2px solid var(--border-color);border-radius:8px;padding:10px}
+        .divider{height:1px;background:var(--border-color);margin:12px 0}
+        #woSubmitBtn[disabled]{opacity:.6}
+        #woStatus{min-height:22px;margin-top:8px;color:#FFD700;font-weight:700}
+        /* Ensure hero has an image even if folder not present */
+        .hero{background-image:url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMTIwMCcgaGVpZ2h0PSc2MDAnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zyc+PHJhZGlhbEdyYWRpZW50IGlkPSdnJyBjeD0nNTAnIGN5PSc1MCUnIHI9JzEwMCUnPjxzdG9wIG9mZnNldD0nMCUnIHN0b3AtY29sb3I9JyMwMDAwMDAnLz48c3RvcCBvZmZzZXQ9JzEwMCUnIHN0b3AtY29sb3I9JyMxMTExMTUnLz48L3JhZGlhbEdyYWRpZW50PjxyZWN0IHdpZHRoPScxMDAlJyBoZWlnaHQ9JzEwMCUnIGZpbGw9J3VybCgjZyknLz48dGV4dCB4PSc1MCUnIHk9JzUwJScgZmlsbD0nI2ZmZicgZm9udC1zaXplPSczMHB4JyB0ZXh0LWFuY2hvcj0nbWlkZGxlJz5QbGFjZWhvbGRlciBCYWNrZ3JvdW5kPC90ZXh0Pjwvc3ZnPiI7)}
+        @media(max-width:1024px){
+          body{padding-top:70px}
+          .hero-content h1{font-size:40px}
+        }
+        @media(max-width:768px){
+          .navbar{padding:12px 12px}
+          .logo a{font-size:1.25em}
+          .nav-links{gap:8px;max-width:60%;justify-content:flex-end}
+          .nav-links a{padding:6px 6px;font-size:.92rem}
+          .social-links a{margin-left:8px;font-size:1.05em}
+          .hero-content h1{font-size:32px}
+          .hero-content p{font-size:.98rem}
+          .cta-button{padding:10px 20px;font-size:.95rem}
+          .section{padding:74px 14px}
+          .section h2{font-size:28px;margin-bottom:20px}
+          .services-grid{grid-template-columns:1fr 1fr;gap:12px}
+          .service-card{padding:14px}
+          .service-card i{font-size:1.5em}
+          .pricelist-container{grid-template-columns:1fr;gap:14px}
+          .price-card{padding:18px}
+          .price-value{font-size:24px}
+          .gallery-wrapper{padding:12px}
+          .gallery-grid{grid-template-columns:1fr 1fr;gap:10px}
+          .gallery-item img{height:auto;aspect-ratio:16/9}
+          .order-btn{width:100%}
+        }
+        @media(max-width:480px){
+          body{padding-top:66px}
+          .navbar{gap:10px}
+          .logo a{font-size:1.15em}
+          .nav-links{max-width:100%;overflow-x:auto;white-space:nowrap;flex-wrap:nowrap}
+          .nav-links a{display:inline-block}
+          .hero{min-height:78vh}
+          .hero-content h1{font-size:26px}
+          .hero-content p{font-size:.95rem}
+          .cta-button{padding:10px 18px;font-size:.92rem}
+          .services-grid{grid-template-columns:1fr}
+          .gallery-grid{grid-template-columns:1fr}
+          .gallery-item img{aspect-ratio:16/9}
+        }
+        /* Respect safe areas on modern phones */
+        @supports(padding:max(env(safe-area-inset-top),0px)){
+          body{ padding-top: calc(66px + env(safe-area-inset-top)); }
+          .navbar{ padding-left: max(12px, env(safe-area-inset-left)); padding-right: max(12px, env(safe-area-inset-right)); }
+          .promo-modal-content{ margin-top: calc(8% + env(safe-area-inset-top)); }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo"><a href="#hero">rgch.e</a></div>
+        <div class="nav-links">
+            <a href="#services">Layanan</a>
+            <a href="#pricelist">Pricelist</a>
+            <a href="#gallery">Portofolio</a>
+        </div>
+        <div class="social-links">
+            <a href="https://discord.gg/UxJ5RpUqH" target="_blank" aria-label="Discord"><i class="fab fa-discord"></i></a>
+            <a href="https://www.instagram.com/rgch.e?igsh=MWtpbTdxdHdnajBnaA==" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        </div>
+    </nav>
+
+    <header class="hero" id="hero">
+        <div class="hero-content">
+            <h1>PREMIUM MINECRAFT <span id="commission-trigger">COMMISSIONS</span></h1>
+            <p>Jasa desain artistik untuk Thumbnail YouTube dan Render 3D Minecraft.</p>
+            <a href="#pricelist" class="cta-button">View</a>
+        </div>
+    </header>
+
+    <section class="section" id="services">
+        <h2>OUR SERVICES</h2>
+        <div class="services-grid">
+            <div class="service-card"><i class="fas fa-magic"></i><h3>Creative Thumbnails</h3><p>Desain visual yang mencolok dan dioptimalkan untuk rasio klik (CTR) tertinggi.</p><a href="#" class="cta-button service-order-btn" data-service="Thumbnail Design">ORDER NOW</a></div>
+            <div class="service-card"><i class="fas fa-project-diagram"></i><h3>Render Minecraft</h3><p>Render Minecraft (Biasa/GFX) dengan pencahayaan sinematik dan kualitas tekstur tinggi.</p><a href="#" class="cta-button service-order-btn" data-service="Render Minecraft">ORDER NOW</a></div>
+            <div class="service-card"><i class="fas fa-paint-brush"></i><h3>Art Render Style</h3><p>Art style (Headshot / Half Body / Full Body) dengan kualitas premium.</p><a href="#" class="cta-button service-order-btn" data-service="Art Render Style">ORDER NOW</a></div>
+            <div class="service-card"><i class="fas fa-check-circle"></i><h3>Reliability & Support</h3><p>Proses kerja terstruktur dan komunikasi mudah melalui Discord.</p></div>
+</div>
+    </section>
+
+    <section class="section" id="pricelist">
+        <h2>COMMISSION PRICE LIST</h2>
+        <div class="pricelist-container">
+            <div class="price-card featured">
+                <h3>Thumbnail Design</h3>
+                <div class="price-value">Rp 10.000<span> / Thumbnail</span></div>
+                <ul>
+                    <li>Desain Visual Kelas A</li>
+                    <li>Max. 3 Karakter/Skin</li>
+                    <li>Resolusi 4K (3840x2160)</li>
+                    <li>Custom Model</li>
+                </ul>
+                <a href="https://discord.gg/UxJ5RpUqH" target="_blank" class="cta-button">ORDER NOW</a>
+            </div>
+            <div class="price-card">
+                <h3>Render Minecraft</h3>
+                <div class="price-value">Rp 5.000<span> / Render (Biasa)</span></div>
+                <ul>
+                    <li>Render Karakter Penuh</li>
+                    <li>Pencahayaan Kualitas Studio</li>
+                    <li>Pose & Ekspresi Custom</li>
+                    <li>File PNG Transparan</li>
+                </ul>
+                <a href="https://discord.gg/UxJ5RpUqH" target="_blank" class="cta-button">ORDER NOW</a>
+            </div>
+                        <div class="price-card">
+                <h3>Art Render Style</h3>
+                <div class="price-value">Rp 25.000<span> / Start</span></div>
+                <ul>
+                    <li>Pilihan Headshot/Half/Full Body</li>
+                    <li>Art Style Kualitas Premium</li>
+                    <li>Warna & Pencahayaan Kustom</li>
+                    <li>Resolusi Tinggi & Detail Tajam</li>
+                </ul>
+                <a href="https://discord.gg/UxJ5RpUqH" target="_blank" class="cta-button">ORDER NOW</a>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="section" id="gallery">
+        <h2>RECENT WORKS</h2>
+        <div class="gallery-wrapper">
+            <h3 class="gallery-title">THUMBNAIL SHOWCASE</h3>
+            <div class="gallery-grid">
+                <div class="gallery-item"><img src="foto/HowToTrainYourDragon.png" alt=""></div>
+                <div class="gallery-item"><img src="foto/Horor.png" alt="Thumbnail 2"></div>
+                <div class="gallery-item"><img src="foto/Penyihir.png" alt="Thumbnail 3"></div>
+                <div class="gallery-item"><img src="foto/Pokemon.png" alt="Thumbnail 4"></div>
+            </div>
+            <h3 class="gallery-title" style="margin-top:32px">RENDER SHOWCASE </h3>
+            <div class="gallery-grid">
+                <div class="gallery-item"><img src="foto/IMG-20260211-WA0039.jpg" alt="Render 1"></div>
+                <div class="gallery-item"><img src="foto/ContohRender2.png" alt="Render 2"></div>
+                <div class="gallery-item"><img src="foto/ContohRender3.png" alt="Render 3"></div>
+                <div class="gallery-item"><img src="foto/IMG-20260103-WA0026.jpg" alt="Render 4"></div>
+            </div>
+        </div>
+            <h3 class="gallery-title" style="margin-top:32px">ART RENDER STYLE SHOWCASE</h3>
+            <div class="gallery-grid">
+                <div class="gallery-item"><img src="foto/IMG-20260220-WA0032.jpg" alt="Art Render 1"></div>
+                <div class="gallery-item"><img src="foto/IMG-20260206-WA0043.jpg" alt="Art Render 2"></div>
+                <div class="gallery-item"><img src="foto/IMG-20260102-WA0017.jpg" alt="Art Render 3"></div>
+                <div class="gallery-item"><img src="foto/IMG-20251224-WA0015.jpg" alt="Art Render 4"></div>
+            </div> 
+            <h3 class="gallery-title" style="margin-top:32px">MORE EXAMPLES</h3>
+            <div class="gallery-grid">
+                <div class="gallery-item"><img src="foto/IMG-20251227-WA0003.jpg" alt="Example 1"></div>
+                <div class="gallery-item"><img src="foto/IMG-20251221-WA0015.jpg" alt="Example 2"></div>
+                <div class="gallery-item"><img src="foto/IMG-20251203-WA0003.jpg" alt="Example 3"></div>
+                
+                
+                
+                
+                
+                
+                <div class="gallery-item"><img src="foto/IMG-20260122-WA0002.jpg" alt="Example 4"></div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Order Choice Modal -->
+    <div id="orderChoiceModal" class="promo-modal">
+      <div class="promo-modal-content">
+        <h4><i class="fas fa-shopping-cart"></i> PILIH CARA PESAN</h4>
+        <p style="margin:.5rem 0 1rem;color:var(--secondary-text)"><span id="ocServiceName">Layanan</span></p>
+        <div class="order-choice-actions">
+            <button id="ocDiscordBtn" class="order-btn btn-discord"><i class="fab fa-discord"></i> Pesan lewat Discord</button>
+            <button id="ocWebBtn" class="order-btn btn-web"><i class="fas fa-globe"></i> Pesan lewat Web (Form)</button>
+            <button class="order-btn btn-cancel" onclick="document.getElementById('orderChoiceModal').classList.remove('active')">Batal</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Web Order Modal -->
+    <div id="webOrderModal" class="promo-modal">
+      <div class="promo-modal-content">
+        <h4><i class="fas fa-file-signature"></i> FORM ORDER</h4>
+        <p style="margin:.5rem 0 1rem;color:var(--secondary-text)"><span id="woServiceName">-</span></p>
+        <div class="form-group"><label for="woName">Nama *</label><input id="woName" type="text" maxlength="80" placeholder="Nama lengkap kamu"></div>
+        <div class="form-group"><label for="woDiscord">Discord</label><input id="woDiscord" type="text" maxlength="60" placeholder="contoh: rafa#1234"></div>
+        <div class="form-group"><label for="woContact">Kontak Alternatif *</label><input id="woContact" type="text" maxlength="120" placeholder="WhatsApp Kamu"></div>
+        <div class="form-group"><label for="woService">Layanan *</label><select id="woService"><option value="Thumbnail Design">Thumbnail Design</option><option value="Render Minecraft">Render Minecraft</option><option value="Art Render Style">Art Render Style</option></select></div>
+        <div class="form-group"><label for="woWorker">Style/Worker *</label>
+          <select id="woWorker">
+            <option value="rgch.e" selected>rgch.e</option>
+            <option value="kenzu">kenzu</option>
+            <option value="axso">axso</option>
+          </select>
+        </div>
+        <div class="form-group" id="woRenderModeGroup" style="display:none">
+          <label for="woRenderMode">Tipe Render Minecraft *</label>
+          <select id="woRenderMode">
+            <option value="Biasa" selected>Render Minecraft (Biasa)</option>
+            <option value="GFX">GFX Render Minecraft</option>
+          </select>
+        </div>
+        <div class="form-group" id="woBodyTypeGroup" style="display:none">
+          <label for="woBodyType">Pilihan *</label>
+          <select id="woBodyType"></select>
+        </div>
+        <div class="form-group" id="woDifficultyGroup" style="display:none">
+          <label for="woDifficultyExtra">Tambahan Kesulitan (Rp) (opsional)</label>
+          <input id="woDifficultyExtra" type="number" min="0" max="1000000" value="0" placeholder="0">
+          <div style="margin-top:6px;font-size:12px;color:var(--secondary-text)">Catatan: Untuk GFX, harga bisa bertambah sesuai kesulitan.</div>
+        </div>
+        <div class="form-group">
+          <div id="woPriceBox"><b style="color:#FFD700">Estimasi Total:</b> <span id="woTotalText">Rp 0</span>
+            <div style="margin-top:6px;font-size:12px;opacity:.9" id="woBreakdownText"></div>
+          </div>
+        </div>
+        <div class="form-group"><label for="woQty">Jumlah</label><input id="woQty" type="number" min="1" max="50" value="1"></div>
+        <div class="form-group"><label for="woDetails">Detail Kebutuhan *</label><textarea id="woDetails" rows="4" maxlength="1200" placeholder="Tema, teks, warna, pose, referensi..."></textarea></div>
+        <div class="form-group"><label for="woFile">Upload Skin Minecraft Kalian</label><input id="woFile" type="file" accept="image/*" multiple></div>
+        <div class="divider"></div>
+        <button id="woSubmitBtn" class="order-btn btn-web" onclick="submitWebOrder()"><i class="fas fa-paper-plane"></i> Kirim ke Discord</button>
+        <div id="woStatus"></div>
+        <button class="order-btn btn-cancel" style="margin-top:10px" onclick="document.getElementById('webOrderModal').classList.remove('active')">Tutup</button>
+      </div>
+    </div>
+
+    <script>
+      // Hook ORDER NOW buttons to show choice modal
+      (function(){
+        const orderBtns = document.querySelectorAll('#pricelist .price-card .cta-button');
+        const ocModal = document.getElementById('orderChoiceModal');
+        const ocServiceName = document.getElementById('ocServiceName');
+        const woServiceName = document.getElementById('woServiceName');
+        const ocDiscordBtn = document.getElementById('ocDiscordBtn');
+        const ocWebBtn = document.getElementById('ocWebBtn');
+        let lastDiscordURL = '';
+        orderBtns.forEach(btn=>{
+          btn.addEventListener('click',e=>{
+            e.preventDefault();
+            const card = btn.closest('.price-card');
+            const service = card? (card.querySelector('h3')?.textContent?.trim()||'Layanan'):'Layanan';
+            lastDiscordURL = btn.getAttribute('href')||'#';
+            ocServiceName.textContent = service;
+            woServiceName.textContent = service;
+            const sel = document.getElementById('woService');
+            if (sel){ for (let i=0;i<sel.options.length;i++){ if(sel.options[i].value.toLowerCase()===service.toLowerCase()){ sel.selectedIndex=i; break; } } }
+            ocDiscordBtn.onclick = ()=>{ window.open(lastDiscordURL,'_blank','noopener'); ocModal.classList.remove('active'); };
+            ocWebBtn.onclick = ()=>{ ocModal.classList.remove('active'); resetWebOrderForm(); document.getElementById('webOrderModal').classList.add('active'); };
+            ocModal.classList.add('active');
+          });
+        });
+
+        // ✅ ORDER NOW tombol di bagian Layanan
+        document.querySelectorAll('.service-order-btn').forEach(btn=>{
+          btn.addEventListener('click', (e)=>{
+            e.preventDefault();
+            const service = btn.getAttribute('data-service') || 'Layanan';
+            lastDiscordURL = 'https://discord.gg/UxJ5RpUqH';
+            ocServiceName.textContent = service;
+            woServiceName.textContent = service;
+            const sel = document.getElementById('woService');
+            if (sel){ for (let i=0;i<sel.options.length;i++){ if(sel.options[i].value.toLowerCase()===service.toLowerCase()){ sel.selectedIndex=i; break; } } }
+            ocDiscordBtn.onclick = ()=>{ window.open(lastDiscordURL,'_blank','noopener'); ocModal.classList.remove('active'); };
+            ocWebBtn.onclick = ()=>{ ocModal.classList.remove('active'); resetWebOrderForm(); document.getElementById('webOrderModal').classList.add('active'); };
+            ocModal.classList.add('active');
+            try{ if(typeof window.__woApplyUI==='function') window.__woApplyUI(); }catch(e){}
+            try{ if(typeof window.__woRenderPrice==='function') window.__woRenderPrice(); }catch(e){}
+          });
+        });
+
+        // Close by clicking overlay
+        ocModal.addEventListener('click', (ev)=>{ if(ev.target===ocModal) ocModal.classList.remove('active'); });
+        document.getElementById('webOrderModal').addEventListener('click',(ev)=>{ if(ev.target===ev.currentTarget) ev.currentTarget.classList.remove('active'); });
+        document.addEventListener('keydown', (e)=>{ if(e.key==='Escape'){ ocModal.classList.remove('active'); document.getElementById('webOrderModal').classList.remove('active'); } });
+      })();
+
+      // ===================== WEBHOOK SENDER (SEPARATED) =====================
+      // 👉 Ganti hanya bagian ini sesuai permintaan: webhook order & rating dipisah.
+      // - DISCORD_ORDER_WEBHOOK_URL: untuk kirim pesanan (Order)
+      // - DISCORD_RATING_WEBHOOK_URL: untuk kirim rating/ulasan (Rating)
+      // Catatan: variabel DISCORD_WEBHOOK_URL tetap ada agar kode lama tidak diubah.
+
+      const DISCORD_ORDER_WEBHOOK_URL = 'https://discord.com/api/webhooks/1464395990290268161/X7h04h2DOFaxctcbhD2E5Lx1Xg1xE5h9A1iZSS9uWZtWbyoVZmC8OR4vJSIBy6RtCIFc';
+      const DISCORD_RATING_WEBHOOK_URL = 'https://discord.com/api/webhooks/1464404619412373719/8oLfk55of-qQ1RoJPc3wkotQfMDKmkcy4UWu8O92dUKXN43RkcobTDQ8kaV8kEeMV128';
+
+      // Alias kompatibilitas (jangan kosong & jangan mengandung 'PASTE_WEBHOOK' agar lolos validasi yang sudah ada)
+      const WORKER_DISCORD_USER_ID = {
+        'rgch.e': '1047067826399227944',
+        'kenzu': '1047067826399227944',
+        'axso': '1047067826399227944'
+      };
+      
+      const DISCORD_WEBHOOK_URL = 'USE_DISPATCHER';
+
+      // Dispatcher: intercept "fetch" ke DISCORD_WEBHOOK_URL dan teruskan ke webhook yang tepat
+      (function(){
+        const originalFetch = window.fetch.bind(window);
+        function pickTargetByPayload(init){
+          // Default ke ORDER kalau tidak bisa dideteksi
+          let target = DISCORD_ORDER_WEBHOOK_URL;
+          try{
+            if(!init) return target;
+            // JSON body
+            const ct = init.headers && (init.headers['Content-Type'] || init.headers['content-type'] || '');
+            if(ct && String(ct).includes('application/json') && typeof init.body === 'string'){
+              const payload = JSON.parse(init.body);
+              const title = payload?.embeds?.[0]?.title || '';
+              const username = payload?.username || '';
+              if(/rating/i.test(title) || /rating/i.test(username)) target = DISCORD_RATING_WEBHOOK_URL;
+              return target;
+            }
+            // FormData body (dengan files)
+            if(init.body instanceof FormData){
+              const pj = init.body.get('payload_json');
+              if(pj){
+                const payload = JSON.parse(pj);
+                const title = payload?.embeds?.[0]?.title || '';
+                const username = payload?.username || '';
+                if(/rating/i.test(title) || /rating/i.test(username)) target = DISCORD_RATING_WEBHOOK_URL;
+              }
+              return target;
+            }
+          }catch(e){ /* fallback ke ORDER */ }
+          return target;
+        }
+        window.fetch = function(input, init){
+          try{
+            if(typeof input === 'string' && input === DISCORD_WEBHOOK_URL){
+              const target = pickTargetByPayload(init);
+              if(!target || /PASTE_.*_WEBHOOK/i.test(target)){
+                return Promise.reject(new Error('Webhook target belum dikonfigurasi.'));
+              }
+              return originalFetch(target, init);
+            }
+          }catch(e){ /* abaikan & teruskan */ }
+          return originalFetch(input, init);
+        };
+      })();
+
+      function sanitizeText(str,max){ if(!str) return ''; const s=String(str).replace(/\s+/g,' ').trim(); return (max && s.length>max)? s.slice(0,max-3)+'...':s; }
+      function resetWebOrderForm(){ ['woName','woDiscord','woContact','woDetails'].forEach(id=>{const el=document.getElementById(id); if(el) el.value='';}); const qty=document.getElementById('woQty'); if(qty) qty.value=1; const f=document.getElementById('woFile'); if(f) f.value=''; const st=document.getElementById('woStatus'); if(st) st.textContent=''; const svc=document.getElementById('woService'); if(svc) svc.value='Thumbnail Design'; const mode=document.getElementById('woRenderMode'); if(mode) mode.value='Biasa'; const w=document.getElementById('woWorker'); if(w) w.value='rgch.e'; const body=document.getElementById('woBodyType'); if(body) body.innerHTML=''; const diff=document.getElementById('woDifficultyExtra'); if(diff) diff.value=0; try{ if(typeof window.__woApplyUI==='function') window.__woApplyUI(); }catch(e){} try{ if(typeof window.__woRenderPrice==='function') window.__woRenderPrice(); }catch(e){} }
+
+      async function submitWebOrder(){
+        const btn = document.getElementById('woSubmitBtn');
+        const statusEl = document.getElementById('woStatus');
+
+        const name = sanitizeText(document.getElementById('woName').value,80);
+        const discord = sanitizeText(document.getElementById('woDiscord').value,60);
+        const contact = sanitizeText(document.getElementById('woContact').value,120);
+        const service = sanitizeText(document.getElementById('woService').value,60);
+        const worker = sanitizeText(document.getElementById('woWorker').value,40);
+        const mode = sanitizeText(document.getElementById('woRenderMode')?.value || '',20);
+        const bodyType = sanitizeText(document.getElementById('woBodyType')?.value || '',60);
+        const difficultyExtra = Math.max(0, parseInt(document.getElementById('woDifficultyExtra')?.value||'0',10) || 0);
+
+        const qty = Math.max(1, Math.min(50, parseInt(document.getElementById('woQty').value||'1',10)));
+        const details = sanitizeText(document.getElementById('woDetails').value,1200);
+        const files = (document.getElementById('woFile').files)||[];
+
+        const rupiah = (n)=>{
+          try{ return new Intl.NumberFormat('id-ID',{style:'currency',currency:'IDR',maximumFractionDigits:0}).format(n); }
+          catch(e){ return 'Rp ' + String(n); }
+        };
+
+ if(!name){ statusEl.style.color='#ff6b6b'; statusEl.textContent='Nama wajib diisi.'; return; }
+if(!details){ statusEl.style.color='#ff6b6b'; statusEl.textContent='Detail kebutuhan wajib diisi.'; return; }
+if(!contact){ statusEl.style.color='#ff6b6b'; statusEl.textContent='Kontak alternatif wajib diisi.'; return; }
+
+        if(!DISCORD_WEBHOOK_URL || DISCORD_WEBHOOK_URL.includes('PASTE_WEBHOOK')){ statusEl.style.color='#ff6b6b'; statusEl.textContent='Webhook Discord belum diset.'; return; }
+
+        // ambil kalkulasi harga dari Additions 7 (kalau ada)
+        let price = { unit:0, total:0, qty, mode, detailLabel:'' };
+        try{ if(typeof window.__woCalc==='function'){ const c=window.__woCalc(); price.unit=c.unit||0; price.total=c.total||0; price.qty=c.qty||qty; price.mode=c.mode||mode; price.detailLabel=c.detailLabel||''; } }catch(e){}
+
+        btn.disabled=true; btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Mengirim...';
+        statusEl.style.color='#FFD700'; statusEl.textContent='Mengirim ke Discord...';
+
+        const orderId = 'ORD-'+Date.now().toString(36).toUpperCase();
+
+        // mention worker (kalau ID ada)
+        const workerId = (WORKER_DISCORD_USER_ID && worker) ? (WORKER_DISCORD_USER_ID[worker] || '') : '';
+        const mention = workerId ? `<@${workerId}>` : '';
+        const allowed_mentions = workerId ? { users:[workerId], parse:[] } : { parse:[] };
+
+        // detail layanan tambahan
+        let serviceExtra = '-';
+        if(service==='Render Minecraft'){
+          serviceExtra = `Mode: ${price.mode || mode || 'Biasa'}`;
+          if((price.mode||mode)==='GFX'){
+            const opt = price.detailLabel || bodyType || '';
+            serviceExtra += opt? ` | Pilihan: ${opt}` : '';
+            serviceExtra += (difficultyExtra>0)? ` | Extra: ${rupiah(difficultyExtra)}` : '';
+          }
+        } else if(service==='Art Render Style'){
+          serviceExtra = bodyType || (price.detailLabel || '-');
+        }
+
+        const embed = {
+          title:`Pesanan Baru • ${service}`,
+          color:0xFF6B00,
+          fields:[
+            {name:'Order ID', value:'`'+orderId+'`', inline:true},
+            {name:'Jumlah', value:String(price.qty || qty), inline:true},
+            {name:'Worker', value: worker || '-', inline:true},
+            {name:'Nama', value:name||'-', inline:false},
+            {name:'Discord', value:discord||'-', inline:true},
+            {name:'Kontak Alternatif', value:contact||'-', inline:true},
+            {name:'Detail Layanan', value:serviceExtra||'-', inline:false},
+            {name:'Harga', value:`Unit: **${rupiah(price.unit||0)}**
+Total: **${rupiah(price.total||0)}**`, inline:false},
+            {name:'Detail', value:details||'-', inline:false}
+          ],
+          timestamp:new Date().toISOString(),
+          footer:{text:'rgch.e • Web Order'}
+        };
+
+        const payload = {
+          username:'rgch.e Orders',
+          content: (mention? `${mention} `:'') + '**Pesanan Web Baru Masuk!**',
+          embeds:[embed],
+          allowed_mentions
+        };
+
+        try{
+          let res;
+          if(files.length>0){
+            const form = new FormData();
+            form.append('payload_json', JSON.stringify(payload));
+            const maxAttach = Math.min(files.length,3);
+            for(let i=0;i<maxAttach;i++){ form.append(`files[${i}]`, files[i], files[i].name); }
+            res = await fetch(DISCORD_WEBHOOK_URL,{method:'POST', body:form});
+          } else {
+            res = await fetch(DISCORD_WEBHOOK_URL,{method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload)});
+          }
+          if(!res.ok) throw new Error('HTTP '+res.status);
+          statusEl.style.color='#4CAF50';
+          statusEl.innerHTML='<i class="fas fa-check-circle"></i> Pesanan terkirim! ID: <b>'+orderId+'</b>';
+          setTimeout(()=>{ document.getElementById('webOrderModal').classList.remove('active'); resetWebOrderForm(); }, 1000);
+        }catch(err){
+          console.error(err);
+          statusEl.style.color='#ff6b6b';
+          statusEl.innerHTML='<i class="fas fa-times-circle"></i> Gagal kirim. '+(String(err).includes('Failed to fetch')?'Kemungkinan CORS. ':'')+'Silakan coba Pesan via Discord.';
+        } finally {
+          btn.disabled=false;
+          btn.innerHTML='<i class="fas fa-paper-plane"></i> Kirim ke Discord';
+        }
+      }
+      window.submitWebOrder = submitWebOrder;
+
+      // Smooth scroll for internal links
+      document.querySelectorAll('a[href^="#"]').forEach(a=>{ a.addEventListener('click',e=>{ const id=a.getAttribute('href'); if(id && id.length>1){ e.preventDefault(); document.querySelector(id)?.scrollIntoView({behavior:'smooth'}); } }); });
+    </script>
+
+    <!-- =====================  ADDITIONS (do not modify existing code)  ===================== -->
+    <style>
+      /* Mobile-friendly modal: prevent content from being too tall on phones */
+      @media (max-width: 640px) {
+        .promo-modal-content{ max-height: 78vh; overflow:auto; margin:14% auto; padding:16px; }
+        .form-group input, .form-group select, .form-group textarea{ font-size:16px; }
+        #woDetails{ min-height:96px; }
+      }
+      /* FAQ styles */
+      #faq{ padding-top:80px; }
+      .faq-container{ max-width:900px; margin:0 auto; }
+      .faq-item{ background:var(--dark-surface); border:1px solid var(--border-color); border-radius:10px; margin-bottom:12px; overflow:hidden; }
+      .faq-q{ width:100%; text-align:left; background:transparent; color:var(--light-text); padding:16px 18px; border:none; display:flex; justify-content:space-between; align-items:center; font-weight:700; cursor:pointer; }
+      .faq-q .icon{ transition: transform .25s ease; color:var(--accent-color); }
+      .faq-a{ max-height:0; overflow:hidden; transition:max-height .3s ease; padding:0 18px; color:var(--secondary-text); }
+      .faq-item.active .faq-a{ padding:0 18px 16px; }
+      .faq-item.active .faq-q .icon{ transform:rotate(90deg); }
+      @media(max-width:768px){
+        #faq{ padding-top:66px; }
+        .faq-q{ padding:14px 14px; }
+      }
+    </style>
+
+    <section class="section" id="faq">
+      <h2>FAQ</h2>
+      <div class="faq-container">
+        <div class="faq-item">
+          <button class="faq-q">Berapa lama pengerjaan?<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
+          <div class="faq-a"><p>Rata-rata 1–3 hari kerja per pesanan, tergantung kompleksitas dan antrian. Untuk kebutuhan urgent, chat dulu via Discord.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Apa saja yang perlu saya siapkan?<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
+          <div class="faq-a"><p>Jelaskan tema, teks utama, warna dominan, pose/ekspresi, dan kirim referensi (skin, logo, contoh style). Makin detail, makin cepat hasilnya.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Revisi bagaimana?<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
+          <div class="faq-a"><p>Termasuk 1–2 kali revisi minor. Revisi besar (ganti konsep) bisa dikenakan biaya tambahan sesuai tingkat perubahan.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Format file dan kualitas?<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
+          <div class="faq-a"><p>Thumbnail dikirim JPEG/PNG hingga 4K. Render karakter dikirim PNG background transparan resolusi tinggi.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Metode pembayaran?<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
+          <div class="faq-a"><p>Bisa via e-wallet/bank lokal. Detail pembayaran akan dikirimkan via Discord setelah order dikonfirmasi.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Apa Yang Harus Di Lakukan Setalah Order?<span class="icon"><i class="fas fa-chevron-right"></i></span></button>
+          <div class="faq-a"><p>Dianjur setelah mengisi form Join Discord Kami Agar Worker Bisa Menghubungi Kamu Untuk Proses Lebih Lanjut ,Atau Isi Kontak Alternative Saat Memesan Melalui Form Ya</p></div>
+      </div>
+    </section>
+
+    <script>
+      // Add FAQ link to navbar without editing existing markup
+      (function(){
+        const navLinks = document.querySelector('.nav-links');
+        if(navLinks && !navLinks.querySelector('a[href="#faq"]')){
+          const a = document.createElement('a');
+          a.href = '#faq'; a.textContent = 'FAQ';
+          navLinks.appendChild(a);
+        }
+      })();
+
+      // Simple accordion behavior for FAQ
+      (function(){
+        const items = document.querySelectorAll('#faq .faq-item');
+        items.forEach(item=>{
+          const q = item.querySelector('.faq-q');
+          const a = item.querySelector('.faq-a');
+          if(!q || !a) return;
+          q.addEventListener('click', ()=>{
+            const expanded = item.classList.contains('active');
+            // collapse others
+            document.querySelectorAll('#faq .faq-item.active').forEach(it=>{
+              if(it!==item){ it.classList.remove('active'); it.querySelector('.faq-a').style.maxHeight = '0px'; }
+            });
+            // toggle current
+            if(expanded){
+              item.classList.remove('active');
+              a.style.maxHeight = '0px';
+            } else {
+              item.classList.add('active');
+              a.style.maxHeight = a.scrollHeight + 'px';
+            }
+          });
+        });
+        // Open first item by default
+        const first = document.querySelector('#faq .faq-item');
+        if(first){
+          first.classList.add('active');
+          const a = first.querySelector('.faq-a');
+          if(a) a.style.maxHeight = a.scrollHeight + 'px';
+        }
+      })();
+
+      // Ensure web order modal content is scrollable if viewport is short
+      (function(){
+        const w = document.getElementById('webOrderModal');
+        const adjust = ()=>{
+          const c = w?.querySelector('.promo-modal-content');
+          if(!c) return;
+          const vh = window.innerHeight;
+          const max = Math.max(360, Math.floor(vh*0.82));
+          c.style.maxHeight = max + 'px';
+          c.style.overflow = 'auto';
+        };
+        window.addEventListener('resize', adjust);
+        window.addEventListener('orientationchange', adjust);
+        adjust();
+      })();
+    </script>
+
+    <!-- =====================  ADDITIONS 2 (Rating + Worker Profile) — DO NOT MODIFY EXISTING CODE  ===================== -->
+    <style>
+      /* TEAM / WORKER PROFILE */
+      #team{ padding-top:80px; }
+      .team-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:20px; }
+      .profile-card{ background:var(--dark-surface); border:1px solid var(--border-color); border-radius:12px; padding:18px; display:flex; gap:14px; align-items:center; }
+      .profile-avatar{ width:68px; height:68px; border-radius:10px; overflow:hidden; border:2px solid #2b2b32; flex:0 0 auto; }
+      .profile-avatar img{ width:100%; height:100%; object-fit:cover; display:block; }
+      .profile-info h3{ margin:0; font-size:18px; }
+      .profile-info p{ margin:4px 0 0; color:var(--secondary-text); font-size:14px; }
+      .trusted-badge{ display:inline-flex; align-items:center; gap:6px; background:#1f2a1f; color:#7CFC7C; border:1px solid #2f5f2f; font-weight:800; padding:4px 8px; border-radius:999px; font-size:12px; margin-top:8px; }
+      .mini-stats{ display:flex; gap:12px; margin-top:10px; color:var(--secondary-text); font-size:12px; }
+      .mini-stats span{ display:flex; align-items:center; gap:6px; }
+
+      /* RATING SECTION */
+      #rating{ padding-top:80px; }
+      .rating-wrapper{ max-width:900px; margin:0 auto; display:grid; grid-template-columns:1.1fr .9fr; gap:20px; }
+      @media(max-width: 940px){ .rating-wrapper{ grid-template-columns:1fr; } }
+      .rating-card{ background:var(--dark-surface); border:1px solid var(--border-color); border-radius:12px; padding:18px; }
+      .stars{ display:flex; gap:8px; font-size:28px; }
+      .star{ color:#555; cursor:pointer; transition:transform .08s ease, color .15s ease; }
+      .star:hover{ transform:translateY(-2px) scale(1.05); }
+      .star.active{ color:#FFD700; }
+      .rating-form .form-group{ margin-bottom:14px; }
+      .rating-status{ min-height:22px; margin-top:6px; font-weight:700; }
+      .rating-badge{ display:inline-flex; align-items:center; gap:6px; background:#2a1f1f; color:#ffaaaa; border:1px solid #5f2f2f; font-weight:700; padding:4px 8px; border-radius:999px; font-size:12px; }
+      .testimonial-sample{ background:#18181d; border:1px dashed #2b2b32; padding:14px; border-radius:10px; color:var(--secondary-text); font-size:14px; }
+
+      @media(max-width:768px){
+        #team{ padding-top:66px; }
+        #rating{ padding-top:66px; }
+        .profile-card{ padding:14px; }
+        .mini-stats{ flex-wrap:wrap; gap:8px; }
+      }
+    </style>
+
+    <!-- TEAM / WORKER PROFILE SECTION -->
+    <section class="section" id="team">
+      <h2>PROFIL WORKER</h2>
+      <div class="team-grid">
+        <div class="profile-card">
+          <div class="profile-avatar">
+            <!-- Neutral SVG avatar (no external file needed) -->
+            <img alt="Avatar rgch.e" src="foto/Tak berjudul30_20260222171411 (1).png" />
+          </div>
+          <div class="profile-info">
+            <h3>rgch.e <span class="trusted-badge"><i class="fas fa-shield-check"></i> Trusted</span></h3>
+            <p>Thumbnail Artist & 3D Render • Minecraft Focused</p>
+            <div class="mini-stats">
+              <span><i class="fas fa-clipboard-check" style="color:#FFD700"></i> 20+ order selesai</span>
+              <span><i class="fas fa-star" style="color:#FFD700"></i> 4.5/5 rating</span>
+              <span><i class="fab fa-discord" style="color:#5865F2"></i> Fast Response</span>
+            </div>
+          </div>
+        </div>
+        
+<!-- WORKER 2 --> <div class="profile-card"> <div class="profile-avatar">             <img alt="Avatar Axso" src="foto/550727a969869cfe604843e2c38e6e89 (1).jpg" /> </div> <div class="profile-info"> <h3>axso <span class="trusted-badge"><i class="fas fa-shield-check"></i> Trusted</span></h3> <p>3D Render Artist & Art Render • Minecraft Focused</p> <div class="mini-stats"> <span><i class="fas fa-clipboard-check" style="color:#FFD700"></i> 50+ order selesai</span> <span><i class="fas fa-star" style="color:#FFD700"></i> 4.6/5 rating</span> <span><i class="fab fa-discord" style="color:#5865F2"></i> Fast Response</span> </div> </div> </div> <!-- WORKER 3 --> <div class="profile-card"> <div class="profile-avatar">             <img alt="Avatar Kenzu" src="foto/4a4b18952452a8aa5f3899a33c3bf591.png" /> </div> <div class="profile-info"> <h3>kenzu <span class="trusted-badge"><i class="fas fa-shield-check"></i> Trusted</span></h3> <p>3D Render Artist & Art Render • Minecraft Focused</p> <div class="mini-stats"> <span><i class="fas fa-clipboard-check" style="color:#FFD700"></i> 50+ order selesai</span> <span><i class="fas fa-star" style="color:#FFD700"></i> 4.7/5 rating</span> <span><i class="fab fa-discord" style="color:#5865F2"></i> Fast Response</span> </div> </div> </div> 
+
+        <!-- Tambah profil lain di sini jika diperlukan -->
+      </div>
+    </section>
+
+    <!-- RATING SECTION -->
+    <section class="section" id="rating">
+      <h2>BERI RATING & ULASAN</h2>
+      <div class="rating-wrapper">
+        <div class="rating-card rating-form">
+          <div class="form-group">
+            <label for="rtName">Nama</label>
+            <input id="rtName" type="text" maxlength="80" placeholder="Boleh kosong/anonim">
+          </div>
+          <div class="form-group">
+            <label for="rtDiscord">Discord</label>
+            <input id="rtDiscord" type="text" maxlength="60" placeholder="contoh: rafa#1234 (opsional)">
+          </div>
+          <div class="form-group">
+            <label for="rtService">Layanan</label>
+            <select id="rtService">
+              <option value="Thumbnail Design">Thumbnail Design</option>
+              <option value="Render Minecraft">Render Minecraft</option>
+              <option value="Art Render Style">Art Render Style</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Rating *</label>
+            <div id="rtStars" class="stars" aria-label="Pilih rating 1-5 bintang"></div>
+          </div>
+          <div class="form-group">
+            <label for="rtComment">Ulasan</label>
+            <textarea id="rtComment" rows="4" maxlength="600" placeholder="Ceritakan pengalamanmu (opsional)"></textarea>
+          </div>
+          <button id="rtSubmit" class="order-btn btn-web" type="button"><i class="fas fa-paper-plane"></i> Kirim Rating</button>
+          <div id="rtStatus" class="rating-status"></div>
+          <p style="margin-top:8px; color:var(--secondary-text); font-size:12px">*Pengiriman langsung ke server Discord melalui webhook.</p>
+        </div>
+
+        <div class="rating-card">
+          <h3 style="margin-bottom:10px">Contoh Ulasan Bagus</h3>
+          <div class="testimonial-sample">
+            <p><span class="rating-badge"><i class="fas fa-star"></i> 5/5</span> "Desainnya tajam, warna nendang, dan CTR naik signifikan. Revisi cepat & ramah!"</p>
+          </div>
+          <div style="margin-top:14px; color:var(--secondary-text); font-size:14px">
+            <p><i class="fas fa-info-circle" style="color:#FFD700"></i> Kami sangat menghargai review jujur untuk membantu klien lain memilih layanan.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      // Inject nav links for Team & Rating (and add smooth scroll just for these links)
+      (function(){
+        const navLinks = document.querySelector('.nav-links');
+        const addLink = (hash, text) => {
+          if(navLinks && !navLinks.querySelector(`a[href='${hash}']`)){
+            const a = document.createElement('a'); a.href = hash; a.textContent = text; navLinks.appendChild(a);
+            a.addEventListener('click', (e)=>{ e.preventDefault(); const el = document.querySelector(hash); if(el) el.scrollIntoView({behavior:'smooth'}); });
+          }
+        };
+        addLink('#team','Worker');
+        addLink('#rating','Rating');
+      })();
+
+      // Build interactive stars
+      (function(){
+        const container = document.getElementById('rtStars');
+        if(!container) return;
+        let value = 0; // 0..5
+        const setValue = (v)=>{ value = v; [...container.children].forEach((el,i)=>{ el.classList.toggle('active', i < value); el.setAttribute('aria-checked', i < value ? 'true':'false'); }); };
+        for(let i=1;i<=5;i++){
+          const s = document.createElement('i'); s.className='fas fa-star star'; s.setAttribute('role','radio'); s.setAttribute('aria-label', i+' bintang'); s.dataset.val = String(i);
+          s.addEventListener('click', ()=> setValue(i));
+          s.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); setValue(i); } });
+          container.appendChild(s);
+        }
+        setValue(5); // default 5
+        // Expose getter
+        window.__getRatingValue = ()=> value;
+      })();
+
+      // Submit rating to the same Discord webhook (routed oleh dispatcher)
+      (function(){
+        const btn = document.getElementById('rtSubmit');
+        if(!btn) return;
+        const statusEl = document.getElementById('rtStatus');
+        const $ = (id)=> document.getElementById(id);
+        const clean = (t,max)=> (t? String(t).replace(/\s+/g,' ').trim(): '').slice(0,max||9999);
+
+        btn.addEventListener('click', async ()=>{
+          const name = clean($('rtName').value,80) || 'Anonim';
+          const discord = clean($('rtDiscord').value,60);
+          const service = clean($('rtService').value,60);
+          const rating = (typeof window.__getRatingValue==='function' ? window.__getRatingValue():0) || 0;
+          const comment = clean($('rtComment').value,600);
+
+          if(!rating){ statusEl.style.color='#ff6b6b'; statusEl.textContent='Mohon pilih rating bintang.'; return; }
+          if(!DISCORD_WEBHOOK_URL || DISCORD_WEBHOOK_URL.includes('PASTE_WEBHOOK')){ statusEl.style.color='#ff6b6b'; statusEl.textContent='Webhook Discord belum diset.'; return; }
+
+          const starText = '★'.repeat(rating) + '☆'.repeat(5-rating) + ` (${rating}/5)`;
+          const embed = {
+            title: `Rating Baru • ${service}`,
+            color: 0xFFD700,
+            fields: [
+              { name:'Nama', value: name, inline: true },
+              { name:'Discord', value: discord || '-', inline: true },
+              { name:'Rating', value: starText, inline: false },
+              { name:'Ulasan', value: comment || '-', inline: false }
+            ],
+            timestamp: new Date().toISOString(),
+            footer: { text: 'rgch.e • Web Rating' }
+          };
+          const payload = { username:'rgch.e Ratings', content:'**Ulasan baru masuk!**', embeds:[embed] };
+
+          try{
+            btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengirim...';
+            statusEl.style.color='#FFD700'; statusEl.textContent='Mengirim ke Discord...';
+            const res = await fetch(DISCORD_WEBHOOK_URL, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
+            if(!res.ok) throw new Error('HTTP '+res.status);
+            statusEl.style.color = '#4CAF50'; statusEl.innerHTML = '<i class="fas fa-check-circle"></i> Terima kasih! Rating kamu sudah terkirim.';
+            // reset minimal (jangan ganggu default stars)
+            $('rtComment').value='';
+          } catch(err){
+            console.error(err);
+            statusEl.style.color='#ff6b6b';
+            statusEl.innerHTML = '<i class="fas fa-times-circle"></i> Gagal kirim. '+(String(err).includes('Failed to fetch')? 'Kemungkinan CORS. ':'')+'Silakan coba lagi atau kirim via Discord.';
+          } finally {
+            btn.disabled = false; btn.innerHTML = '<i class="fas fa-paper-plane"></i> Kirim Rating';
+          }
+        });
+      })();
+    </script>
+
+    
+    <!-- =====================  ADDITIONS 3 (Hamburger / Garis 3 for Navbar)  ===================== -->
+    <style>
+      /* Tombol hamburger (garis 3) */
+      .hamburger{ background:transparent; border:0; width:42px; height:42px; display:inline-flex; align-items:center; justify-content:center; border-radius:8px; cursor:pointer; }
+      .hamburger span{ display:block; width:22px; height:2px; background:var(--light-text); margin:3px 0; transition:transform .18s ease, opacity .18s ease, background .18s ease; }
+      .hamburger:focus{ outline:2px solid rgba(255,107,0,.5); outline-offset:2px; }
+
+      /* Panel menu yang berisi .nav-links dipindahkan menjadi dropdown/overlay */
+      .navbar .nav-links{ position:fixed; top:64px; right:12px; display:none; flex-direction:column; gap:6px; background:var(--dark-surface); border:1px solid var(--border-color); border-radius:12px; padding:10px; box-shadow:0 12px 36px rgba(0,0,0,.5); width:min(88vw, 280px); max-height:70vh; overflow:auto; z-index:10000; }
+      .navbar .nav-links a{ width:100%; padding:10px 12px; margin:0; border-radius:8px; }
+      .navbar .nav-links a:hover{ background:rgba(255,107,0,.08); }
+      /* Saat menu dibuka */
+      .navbar.show-menu .nav-links{ display:flex; }
+
+      /* Animasi ikon hamburger menjadi "X" saat aktif */
+      .navbar.show-menu .hamburger span:nth-child(1){ transform:translateY(5px) rotate(45deg); }
+      .navbar.show-menu .hamburger span:nth-child(2){ opacity:0; }
+      .navbar.show-menu .hamburger span:nth-child(3){ transform:translateY(-5px) rotate(-45deg); }
+
+      /* Sembunyikan layout lama dan selalu gunakan hamburger (agar benar-benar dipindahkan) */
+      .navbar .nav-links{ /* override display flex inline di awal */ }
+
+      /* Sesuaikan posisi panel di layar kecil */
+      @media(max-width:480px){
+        .navbar .nav-links{ top:58px; right:8px; width:min(92vw, 320px); }
+      }
+
+      /* Hormati safe area */
+      @supports(padding:max(env(safe-area-inset-top),0px)){
+        .navbar .nav-links{ right: max(8px, env(safe-area-inset-right)); top: calc(58px + env(safe-area-inset-top)); }
+      }
+    </style>
+    <script>
+      // Inject tombol hamburger dan logika toggle tanpa mengubah markup yang ada
+      (function(){
+        const navbar = document.querySelector('.navbar');
+        if(!navbar) return;
+        // Buat tombol jika belum ada
+        if(!document.getElementById('hamburger')){
+          const btn = document.createElement('button');
+          btn.id = 'hamburger';
+          btn.className = 'hamburger';
+          btn.setAttribute('aria-label','Buka menu');
+          btn.setAttribute('aria-expanded','false');
+          btn.setAttribute('aria-controls','navLinksPanel');
+          btn.innerHTML = '<span></span><span></span><span></span>';
+          const social = navbar.querySelector('.social-links');
+          // sisipkan sebelum ikon sosial, agar tetap di kanan
+          navbar.insertBefore(btn, social || null);
+
+          const navLinks = navbar.querySelector('.nav-links');
+          if(navLinks){ navLinks.id = navLinks.id || 'navLinksPanel'; }
+
+          // Toggle buka/tutup
+          const closeMenu = ()=>{ navbar.classList.remove('show-menu'); btn.setAttribute('aria-expanded','false'); };
+          const toggleMenu = (e)=>{ e && e.stopPropagation(); const open = navbar.classList.toggle('show-menu'); btn.setAttribute('aria-expanded', open?'true':'false'); };
+
+          btn.addEventListener('click', toggleMenu);
+
+          // Klik di luar menutup menu
+          document.addEventListener('click', (e)=>{ if(!navbar.contains(e.target)) closeMenu(); });
+
+          // ESC untuk menutup
+          document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeMenu(); });
+
+          // Delegasi: klik tautan di menu -> tutup
+          const panel = navbar.querySelector('.nav-links');
+          if(panel){
+            panel.addEventListener('click', (e)=>{
+              const a = e.target.closest('a');
+              if(a){ closeMenu(); }
+            });
+          }
+        }
+      })();
+    </script>
+
+    <!-- =====================  ADDITIONS 4 (Gallery Click Buy/View + TRUST & ORDER FLOW)  ===================== -->
+    <style>
+      /* Modal aksi galeri */
+      .ga-modal{ display:none; position:fixed; inset:0; z-index:12000; background:rgba(0,0,0,.85); backdrop-filter:blur(2px); }
+      .ga-modal.active{ display:block; }
+      .ga-box{ width:min(94%,520px); margin:8% auto; background:var(--dark-surface); border:2px solid var(--border-color); border-radius:12px; padding:18px; }
+      .ga-head{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
+      .ga-head h4{ margin:0; font-size:18px; }
+      .ga-prev{ margin-top:10px; display:flex; gap:10px; align-items:center; }
+      .ga-prev img{ width:84px; height:56px; object-fit:cover; border-radius:8px; border:1px solid var(--border-color); }
+      .ga-actions{ display:flex; flex-direction:column; gap:10px; margin-top:12px; }
+      .btn-view{ background:#222; color:#fff; }
+
+      /* Modal viewer gambar */
+      .iv-modal{ display:none; position:fixed; inset:0; z-index:13000; background:rgba(0,0,0,.92); }
+      .iv-modal.active{ display:flex; align-items:center; justify-content:center; }
+      .iv-inner{ max-width:94vw; max-height:86vh; }
+      .iv-inner img{ width:100%; height:auto; max-height:86vh; display:block; border-radius:10px; box-shadow:0 12px 40px rgba(0,0,0,.6); }
+      .iv-close{ position:fixed; top:14px; right:14px; background:#222; color:#fff; border:1px solid #444; width:42px; height:42px; border-radius:8px; display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:13100; }
+      .iv-caption{ position:fixed; bottom:18px; left:50%; transform:translateX(-50%); color:#ddd; font-size:14px; background:rgba(0,0,0,.4); padding:6px 10px; border-radius:8px; }
+
+      /* TRUST & FLOW sections */
+      #trust{ padding-top:80px; }
+      .trust-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:14px; }
+      .trust-card{ background:var(--dark-surface); border:1px solid var(--border-color); border-radius:12px; padding:16px; }
+      .trust-card h3{ margin:0 0 6px 0; font-size:18px; }
+      .trust-card p{ color:var(--secondary-text); font-size:14px; }
+
+      #flow{ padding-top:80px; }
+      .flow-steps{ display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:14px; counter-reset: step; }
+      .flow-item{ background:var(--dark-surface); border:1px solid var(--border-color); border-radius:12px; padding:16px; position:relative; }
+      .flow-item::before{ counter-increment: step; content: counter(step); position:absolute; top:-10px; left:-10px; width:28px; height:28px; border-radius:50%; background:var(--accent-color); color:#111; font-weight:900; display:flex; align-items:center; justify-content:center; box-shadow:0 6px 20px rgba(255,107,0,.25); }
+      .flow-item h4{ margin:0 0 6px 0; }
+      .flow-item p{ color:var(--secondary-text); font-size:14px; }
+
+      @media(max-width:768px){
+        #trust{ padding-top:66px; }
+        #flow{ padding-top:66px; }
+      }
+    </style>
+
+    <!-- Gallery Action Modal -->
+    <div id="galleryActionModal" class="ga-modal" aria-hidden="true">
+      <div class="ga-box">
+        <div class="ga-head">
+          <h4><i class="fas fa-image"></i> Apa yang ingin kamu lakukan?</h4>
+          <button type="button" class="order-btn btn-cancel" id="gaCloseBtn"><i class="fas fa-times"></i> Tutup</button>
+        </div>
+        <div class="ga-prev">
+          <img id="gaPrevImg" alt="Preview karya" src=""/>
+          <div style="font-size:13px; color:var(--secondary-text)">
+            <div><b id="gaServiceLabel">-</b></div>
+            <div>• Klik <b>Beli Seperti Ini</b> untuk memesan dengan referensi karya ini.</div>
+            <div>• Klik <b>Lihat Gambar</b> untuk melihat ukuran penuh.</div>
+          </div>
+        </div>
+        <div class="ga-actions">
+          <button id="gaBuyBtn" class="order-btn btn-web"><i class="fas fa-cart-plus"></i> Beli Seperti Ini</button>
+          <button id="gaViewBtn" class="order-btn btn-view"><i class="fas fa-eye"></i> Lihat Gambar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Image Viewer Modal -->
+    <div id="imageViewModal" class="iv-modal" aria-hidden="true">
+      <button class="iv-close" id="ivCloseBtn" aria-label="Tutup"><i class="fas fa-times"></i></button>
+      <div class="iv-inner"><img id="ivImage" alt="Preview" src=""/></div>
+      <div class="iv-caption" id="ivCaption"></div>
+    </div>
+
+    <!-- TRUST SECTION -->
+    <section class="section" id="trust">
+      <h2>TRUST & KEAMANAN</h2>
+      <div class="trust-grid">
+        <div class="trust-card"><h3><i class="fas fa-shield-check" style="color:#7CFC7C"></i> Garansi Kualitas</h3><p>Preview dikirim sebelum final. Revisi minor 1–2x untuk memastikan hasil sesuai ekspektasi.</p></div>
+        <div class="trust-card"><h3><i class="fas fa-lock" style="color:#FFD700"></i> Pembayaran Aman</h3><p>Bayar via e-wallet/bank lokal setelah order dikonfirmasi di Discord.</p></div>
+        <div class="trust-card"><h3><i class="fas fa-bolt" style="color:#FF6B00"></i> Respons Cepat</h3><p>Komunikasi aktif via Discord, update progress transparan dari awal hingga selesai.</p></div>
+        <div class="trust-card"><h3><i class="fas fa-user-check" style="color:#6ad66a"></i> Portofolio Nyata</h3><p>Semua contoh di galeri adalah hasil kerja asli. Style bisa disesuaikan dengan kebutuhanmu.</p></div>
+      </div>
+    </section>
+
+    <!-- ORDER FLOW SECTION -->
+    <section class="section" id="flow">
+      <h2>ORDER FLOW</h2>
+      <div class="flow-steps">
+        <div class="flow-item"><h4><i class="fas fa-comment-dots" style="color:#FFD700"></i> Brief</h4><p>Kamu jelaskan kebutuhan (tema, teks, warna, pose, referensi). Bisa mulai dari tombol <b>ORDER NOW</b> atau <b>Beli Seperti Ini</b> di galeri.</p></div>
+        <div class="flow-item"><h4><i class="fas fa-file-invoice" style="color:#FF6B00"></i> Konfirmasi & Invoice</h4><p>Kami cek antrian/kompleksitas, lalu kirim detail harga & estimasi waktu via Discord.</p></div>
+        <div class="flow-item"><h4><i class="fas fa-paint-brush" style="color:#6aa8ff"></i> Pengerjaan</h4><p>Mulai produksi. Kamu akan menerima progress/preview agar bisa memberi masukan cepat.</p></div>
+        <div class="flow-item"><h4><i class="fas fa-sync" style="color:#a0e67a"></i> Revisi</h4><p>Termasuk 1–2x revisi minor. Revisi besar mungkin ada biaya tambahan sesuai perubahan.</p></div>
+        <div class="flow-item"><h4><i class="fas fa-gift" style="color:#ffd28a"></i> Final Delivery</h4><p>File akhir dikirim (JPG/PNG 4K atau PNG transparan). Pastikan semuanya sesuai.</p></div>
+        <div class="flow-item"><h4><i class="fas fa-star" style="color:#FFD700"></i> Review</h4><p>Berikan rating & ulasan di bagian <b>Rating</b> untuk bantu klien lain.</p></div>
+      </div>
+    </section>
+
+    <script>
+      // 1) Tambah link TRUST & FLOW ke navbar (tanpa mengubah markup)
+      (function(){
+        const navLinks = document.querySelector('.nav-links');
+        const addLink = (hash, text) => {
+          if(navLinks && !navLinks.querySelector(`a[href='${hash}']`)){
+            const a = document.createElement('a'); a.href = hash; a.textContent = text; navLinks.appendChild(a);
+            a.addEventListener('click', (e)=>{ e.preventDefault(); const el = document.querySelector(hash); if(el) el.scrollIntoView({behavior:'smooth'}); });
+          }
+        };
+        addLink('#trust','Trust');
+        addLink('#flow','Order Flow');
+      })();
+
+      // 2) Tandai setiap gambar galeri dengan layanan terkait
+      (function(){
+        const grids = document.querySelectorAll('#gallery .gallery-grid');
+        grids.forEach((grid, idx) => {
+          let service = 'Thumbnail Design';
+          if(idx===0) service='Thumbnail Design';
+          else if(idx===1) service='Render Minecraft';
+          else service='Art Render Style';
+          grid.querySelectorAll('.gallery-item img').forEach(img => {
+            img.setAttribute('data-service', service);
+          });
+        });
+      })();
+
+      // 3) Logika klik gambar -> tampilkan modal aksi (Beli / Lihat)
+      (function(){
+        const actionModal = document.getElementById('galleryActionModal');
+        const prevImg = document.getElementById('gaPrevImg');
+        const gaServiceLabel = document.getElementById('gaServiceLabel');
+        const buyBtn = document.getElementById('gaBuyBtn');
+        const viewBtn = document.getElementById('gaViewBtn');
+        const closeBtn = document.getElementById('gaCloseBtn');
+
+        let currentSrc = '';
+        let currentAlt = '';
+        let currentService = '';
+
+        // delegasi: klik pada semua thumbnail di galeri
+        document.querySelectorAll('#gallery .gallery-item img').forEach(img => {
+          img.style.cursor = 'pointer';
+          img.addEventListener('click', () => {
+            currentSrc = img.getAttribute('src') || '';
+            currentAlt = img.getAttribute('alt') || 'Preview';
+            currentService = img.getAttribute('data-service') || 'Thumbnail Design';
+            prevImg.src = currentSrc;
+            prevImg.alt = currentAlt;
+            gaServiceLabel.textContent = currentService;
+            actionModal.classList.add('active');
+          });
+        });
+
+        // Aksi: Beli seperti ini
+        buyBtn.addEventListener('click', () => {
+          // Buka modal order choice bawaan & set layanan yang sesuai
+          const ocModal = document.getElementById('orderChoiceModal');
+          const ocServiceName = document.getElementById('ocServiceName');
+          const woServiceName = document.getElementById('woServiceName');
+          const ocDiscordBtn = document.getElementById('ocDiscordBtn');
+          const ocWebBtn = document.getElementById('ocWebBtn');
+          const discordInvite = 'https://discord.gg/UxJ5RpUqH';
+
+          // isi label & sync dropdown layanan di form web order
+          ocServiceName.textContent = currentService;
+          woServiceName.textContent = currentService;
+          const sel = document.getElementById('woService');
+          if (sel){
+            for(let i=0;i<sel.options.length;i++){
+              if(sel.options[i].value.toLowerCase() === currentService.toLowerCase()){
+                sel.selectedIndex = i; break;
+              }
+            }
+          }
+
+          // set handler tombol (tanpa mengubah kode yang ada)
+          if(ocDiscordBtn){ ocDiscordBtn.onclick = ()=>{ window.open(discordInvite,'_blank','noopener'); ocModal.classList.remove('active'); }; }
+          if(ocWebBtn){ ocWebBtn.onclick = ()=>{ ocModal.classList.remove('active'); resetWebOrderForm(); document.getElementById('webOrderModal').classList.add('active'); }; }
+
+          // Auto pre-fill detail dengan referensi gambar (opsional)
+          const details = document.getElementById('woDetails');
+          if(details && currentSrc){
+            const add = `Referensi: ${currentSrc} (mohon buat mirip)\n`;
+            details.value = add + (details.value||'');
+          }
+
+          // Tampilkan modal order pilihan
+          ocModal.classList.add('active');
+          actionModal.classList.remove('active');
+        });
+
+        // Aksi: Lihat gambar
+        const iv = document.getElementById('imageViewModal');
+        const ivImg = document.getElementById('ivImage');
+        const ivCap = document.getElementById('ivCaption');
+        const ivClose = document.getElementById('ivCloseBtn');
+
+        viewBtn.addEventListener('click', () => {
+          if(!currentSrc) return;
+          ivImg.src = currentSrc;
+          ivImg.alt = currentAlt || 'Preview';
+          ivCap.textContent = currentAlt || 'Preview';
+          iv.classList.add('active');
+          actionModal.classList.remove('active');
+        });
+
+        // Close handlers
+        const closeAction = () => actionModal.classList.remove('active');
+        closeBtn.addEventListener('click', closeAction);
+        actionModal.addEventListener('click', (e)=>{ if(e.target===actionModal) closeAction(); });
+
+        const closeViewer = () => { iv.classList.remove('active'); ivImg.src=''; };
+        ivClose.addEventListener('click', closeViewer);
+        iv.addEventListener('click', (e)=>{ if(e.target===iv) closeViewer(); });
+        document.addEventListener('keydown', (e)=>{
+          if(e.key==='Escape'){ closeAction(); closeViewer(); }
+        });
+      })();
+    </script>
+
+
+
+<!-- =====================  ADDITIONS 5 (Admin Login + TFO) — DO NOT MODIFY EXISTING CODE  ===================== -->
+<style>
+  .admin-fab{ position:fixed; right:18px; bottom:18px; width:52px; height:52px; border-radius:50%; background:var(--accent-color); color:#111; display:none; align-items:center; justify-content:center; border:none; box-shadow:0 10px 28px rgba(0,0,0,.45); cursor:pointer; z-index:16000; font-size:20px; }
+  .admin-fab:hover{ transform:translateY(-2px); }
+  .promo-modal-content .small{ padding:8px; font-size:12px; }
+  .admin-note{ color:var(--secondary-text); font-size:12px; margin-top:6px; }
+</style>
+<div id="adminLoginModal" class="promo-modal" aria-hidden="true">
+  <div class="promo-modal-content">
+    <h4><i class="fas fa-user-shield"></i> Admin Login</h4>
+    <p class="admin-note">* Buka login dengan klik logo <b>rgch.e</b> sebanyak <b>5×</b> cepat.</p>
+    <div class="form-group"><label for="adUser">Username</label><input id="adUser" type="text" maxlength="80" placeholder="admin" value="admin"></div>
+    <div class="form-group"><label for="adPass">PIN/Password</label><input id="adPass" type="password" maxlength="120" placeholder="Masukkan PIN/password"></div>
+    <button id="adLoginBtn" class="order-btn btn-web" type="button"><i class="fas fa-right-to-bracket"></i> Masuk</button>
+    <div id="adLoginStatus" style="min-height:22px; margin-top:6px; font-weight:800"></div>
+    <button class="order-btn btn-cancel" style="margin-top:10px" onclick="document.getElementById('adminLoginModal').classList.remove('active')">Tutup</button>
+  </div>
+</div>
+<div id="adminPanelModal" class="promo-modal" aria-hidden="true">
+  <div class="promo-modal-content">
+    <h4><i class="fas fa-tools"></i> Admin Panel</h4>
+    <div style="display:flex; gap:8px; justify-content:flex-end; margin-top:6px;">
+      <button id="adLogoutBtn" class="order-btn btn-cancel small" type="button"><i class="fas fa-right-from-bracket"></i> Logout</button>
+    </div>
+    <div class="divider"></div>
+    <h4 style="margin:6px 0 10px"><i class="fas fa-gift" style="color:#ffd28a"></i> Kirim TFO (Thank For Order)</h4>
+    <p class="admin-note">* Terkirim ke Discord menggunakan <b>webhook khusus</b> (bukan yang order/rating).</p>
+    <div class="form-group"><label for="tfoName">Nama Pelanggan</label><input id="tfoName" type="text" maxlength="80" placeholder="Opsional"></div>
+    <div class="form-group"><label for="tfoOrderId">Order ID *</label><input id="tfoOrderId" type="text" maxlength="60" placeholder="contoh: ORD-ABCD123"></div>
+    <div class="form-group"><label for="tfoService">Layanan *</label>
+      <select id="tfoService">
+        <option value="Thumbnail Design">Thumbnail Design</option>
+        <option value="Render Minecraft">Render Minecraft</option>
+        <option value="Art Render Style">Art Render Style</option>
+      </select>
+    </div>
+    <div class="form-group"><label for="tfoMention">Discord User ID (opsional, untuk @mention)</label><input id="tfoMention" type="text" maxlength="32" placeholder="contoh: 123456789012345678"></div>
+    <div class="form-group"><label for="tfoLink">Link Tambahan (opsional)</label><input id="tfoLink" type="url" maxlength="200" placeholder="URL invoice/brief"></div>
+    <div class="form-group"><label for="tfoNote">Pesan TFO</label><textarea id="tfoNote" rows="4" maxlength="600" placeholder="Terima kasih sudah memesan di rgch.e! Pesananmu sedang kami proses. 🙏"></textarea></div>
+    <button id="tfoSendBtn" class="order-btn btn-web" type="button"><i class="fas fa-paper-plane"></i> Kirim ke Discord</button>
+    <div id="tfoStatus" style="min-height:22px; margin-top:6px; font-weight:800"></div>
+    <button class="order-btn btn-cancel" style="margin-top:10px" onclick="document.getElementById('adminPanelModal').classList.remove('active')">Tutup</button>
+  </div>
+</div>
+<button id="adminFab" class="admin-fab" title="Buka Admin"><i class="fas fa-user-cog"></i></button>
+<script>
+(function(){
+  const DISCORD_TFO_WEBHOOK_URL = 'https://discord.com/api/webhooks/1464395994451017966/pK4P0-BnsJH_n_zzsJwD7jdcf_2qvjDx_VzLXkV_ScU_3RDR1LcyNz4ASaWWWw1Q_ZI8';
+  const ADMIN_USERNAME = 'admin';
+  const ADMIN_PASSWORD_HASH = '33cf66da09e79b95b9250dc60b0fecf275e582f5c6fbbd81059387ca69b7529a';
+  const SESSION_KEY = 'rgche_admin_auth_v1';
+  function openModal(id){ document.getElementById(id)?.classList.add('active'); }
+  function closeModal(id){ document.getElementById(id)?.classList.remove('active'); }
+  async function sha256Hex(text){ const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text)); return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join(''); }
+  function isAuthed(){ try{ return localStorage.getItem(SESSION_KEY)==='ok'; }catch(e){ return false; } }
+  function setAuthed(v){ try{ v? localStorage.setItem(SESSION_KEY,'ok') : localStorage.removeItem(SESSION_KEY); }catch(e){} updateUI(); }
+  const fab = document.getElementById('adminFab');
+  function updateUI(){ fab.style.display = isAuthed()? 'flex':'none'; }
+  const loginModal = document.getElementById('adminLoginModal');
+  const panelModal = document.getElementById('adminPanelModal');
+  const loginBtn = document.getElementById('adLoginBtn');
+  const logoutBtn = document.getElementById('adLogoutBtn');
+  const loginStatus = document.getElementById('adLoginStatus');
+  const adUser = document.getElementById('adUser');
+  const adPass = document.getElementById('adPass');
+  [loginModal, panelModal].forEach(m=> m?.addEventListener('click', (e)=>{ if(e.target===m) m.classList.remove('active'); }));
+  document.addEventListener('keydown', (e)=>{ if(e.key==='Escape'){ closeModal('adminLoginModal'); closeModal('adminPanelModal'); } });
+  loginBtn?.addEventListener('click', async ()=>{
+    loginStatus.textContent='Memverifikasi...'; loginStatus.style.color='#FFD700';
+    const u = String(adUser.value||'').trim() || 'admin';
+    const p = String(adPass.value||'');
+    const hash = await sha256Hex(p);
+    if(u===ADMIN_USERNAME && hash===ADMIN_PASSWORD_HASH){
+      setAuthed(true);
+      loginStatus.style.color='#4CAF50'; loginStatus.innerHTML='<i class="fas fa-check-circle"></i> Login sukses';
+      adPass.value='';
+      setTimeout(()=>{ closeModal('adminLoginModal'); openModal('adminPanelModal'); }, 500);
+    } else {
+      loginStatus.style.color='#ff6b6b'; loginStatus.innerHTML='<i class="fas fa-times-circle"></i> Username/PIN salah';
+    }
+  });
+  logoutBtn?.addEventListener('click', ()=>{ setAuthed(false); closeModal('adminPanelModal'); });
+  fab?.addEventListener('click', ()=> openModal('adminPanelModal'));
+  (function(){
+    const targets = [];
+    const t1 = document.querySelector('.logo a'); if(t1) targets.push(t1);
+    const t2 = document.getElementById('commission-trigger'); if(t2) targets.push(t2);
+    const t3 = document.querySelector('.hero-content h1'); if(t3) targets.push(t3);
+    let count=0; let timer=null;
+    const handler = ()=>{
+      count++;
+      if(count>=5){ count=0; clearTimeout(timer); openModal('adminLoginModal'); }
+      else { clearTimeout(timer); timer=setTimeout(()=>{ count=0; }, 1500); }
+    };
+    targets.forEach(el=> el.addEventListener('click', handler));
+  })();
+  const tfoBtn = document.getElementById('tfoSendBtn');
+  const tfoStatus = document.getElementById('tfoStatus');
+  tfoBtn?.addEventListener('click', async ()=>{
+    if(!isAuthed()){ openModal('adminLoginModal'); return; }
+    const name = String(document.getElementById('tfoName').value||'').trim();
+    const orderId = String(document.getElementById('tfoOrderId').value||'').trim();
+    const service = String(document.getElementById('tfoService').value||'').trim();
+    const mentionId = String(document.getElementById('tfoMention').value||'').trim();
+    const link = String(document.getElementById('tfoLink').value||'').trim();
+    const note = String(document.getElementById('tfoNote').value||'').trim();
+    if(!DISCORD_TFO_WEBHOOK_URL || /PASTE_.*_WEBHOOK/i.test(DISCORD_TFO_WEBHOOK_URL)){ tfoStatus.style.color='#ff6b6b'; tfoStatus.innerHTML='<i class="fas fa-exclamation-triangle"></i> Webhook TFO belum diset.'; return; }
+    if(!orderId || !service){ tfoStatus.style.color='#ff6b6b'; tfoStatus.textContent='Order ID dan Layanan wajib diisi.'; return; }
+    const embed = {
+      title: 'Thank You For Your Order',
+      color: 0x6ad66a,
+      fields: [
+        { name: 'Order ID', value: '`'+orderId+'`', inline: true },
+        { name: 'Layanan', value: service, inline: true },
+        { name: 'Nama', value: name || '-', inline: false },
+        { name: 'Catatan', value: (note || 'Terima kasih sudah memesan di rgch.e! Pesananmu sedang kami proses. 🙏'), inline: false },
+        ...(link ? [{ name: 'Link', value: link, inline: false }] : [])
+      ],
+      timestamp: new Date().toISOString(),
+      footer: { text: 'rgch.e • TFO' }
+    };
+    const content = mentionId ? `<@${mentionId}>` : '';
+    try{
+      tfoBtn.disabled=true; tfoBtn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Mengirim...';
+      tfoStatus.style.color='#FFD700'; tfoStatus.textContent='Mengirim ke Discord...';
+      const res = await fetch(DISCORD_TFO_WEBHOOK_URL, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ username:'rgch.e TFO', content, embeds:[embed] }) });
+      if(!res.ok) throw new Error('HTTP '+res.status);
+      tfoStatus.style.color='#4CAF50'; tfoStatus.innerHTML='<i class="fas fa-check-circle"></i> TFO terkirim.';
+    } catch(err){
+      console.error(err);
+      tfoStatus.style.color='#ff6b6b'; tfoStatus.innerHTML='<i class="fas fa-times-circle"></i> Gagal kirim. '+(String(err).includes('Failed to fetch')?'Kemungkinan CORS. ':'')+'Coba lagi.';
+    } finally {
+      tfoBtn.disabled=false; tfoBtn.innerHTML='<i class="fas fa-paper-plane"></i> Kirim ke Discord';
+    }
+  });
+  updateUI();
+})();
+</script>
+
+
+<!-- =====================  ADDITIONS 6 (TFO Image Upload Injection) — DO NOT MODIFY EXISTING CODE  ===================== -->
+<style>
+  /* Preview untuk lampiran TFO */
+  .tfo-previews{ display:flex; gap:8px; flex-wrap:wrap; margin-top:6px; }
+  .tfo-previews .item{ width:56px; height:56px; border:1px solid var(--border-color); border-radius:8px; overflow:hidden; background:#111; }
+  .tfo-previews .item img{ width:100%; height:100%; object-fit:cover; display:block; }
+</style>
+<script>
+(function(){
+  // 1) Sisipkan input file untuk TFO (tanpa mengubah markup yang sudah ada)
+  const panel = document.querySelector('#adminPanelModal .promo-modal-content');
+  const sendBtn = document.getElementById('tfoSendBtn');
+  if(panel && sendBtn && !document.getElementById('tfoFiles')){
+    const wrap = document.createElement('div');
+    wrap.className = 'form-group';
+    wrap.innerHTML = `
+      <label for="tfoFiles">Lampirkan Gambar Desain (opsional)</label>
+      <input id="tfoFiles" type="file" accept="image/*" multiple>
+      <div class="admin-note" id="tfoFilesNote">Maks 3 file. Akan dikirim sebagai lampiran ke Discord.</div>
+      <div id="tfoFilesPreview" class="tfo-previews"></div>
+    `;
+    panel.insertBefore(wrap, sendBtn);
+
+    // Preview
+    const input = wrap.querySelector('#tfoFiles');
+    const preview = wrap.querySelector('#tfoFilesPreview');
+    const note = wrap.querySelector('#tfoFilesNote');
+    input.addEventListener('change', ()=>{
+      preview.innerHTML='';
+      const files = Array.from(input.files||[]);
+      const max = Math.min(files.length, 3);
+      if(files.length>3){ note.textContent = 'Hanya 3 file pertama yang akan dikirim.'; }
+      else { note.textContent = 'Maks 3 file. Akan dikirim sebagai lampiran ke Discord.'; }
+      for(let i=0;i<max;i++){
+        const f = files[i];
+        const url = URL.createObjectURL(f);
+        const item = document.createElement('div'); item.className='item';
+        const img = document.createElement('img'); img.src=url; img.alt=f.name; item.appendChild(img);
+        preview.appendChild(item);
+      }
+    });
+  }
+
+  // 2) Patch fetch: upgrade request TFO (JSON) menjadi multipart jika ada file pada #tfoFiles
+  const prevFetch = window.fetch.bind(window);
+  window.fetch = function(input, init){
+    try{
+      if(typeof input === 'string' && /^https:\/\/discord\.com\/api\/webhooks\//i.test(input) && init && String(init.method||'').toUpperCase()==='POST'){
+        const ct = init.headers && (init.headers['Content-Type'] || init.headers['content-type'] || '');
+        const isJSON = ct && String(ct).includes('application/json') && typeof init.body === 'string';
+        if(isJSON){
+          try{
+            const payload = JSON.parse(init.body);
+            const isTFO = (payload?.username && /rgch\.e\s*TFO/i.test(payload.username))
+                       || (payload?.embeds?.[0]?.footer?.text && /rgch\.e\s*•\s*TFO/i.test(payload.embeds[0].footer.text))
+                       || (payload?.embeds?.[0]?.title && /Thank You For Your Order/i.test(payload.embeds[0].title));
+            if(isTFO){
+              const fEl = document.getElementById('tfoFiles');
+              const files = (fEl && fEl.files) ? Array.from(fEl.files) : [];
+              if(files.length>0){
+                const form = new FormData();
+                form.append('payload_json', init.body);
+                const maxAttach = Math.min(files.length, 3);
+                for(let i=0;i<maxAttach;i++){
+                  form.append(`files[${i}]`, files[i], files[i].name);
+                }
+                const newInit = { ...init, headers: { ...(init.headers||{}) } };
+                // hapus header content-type agar boundary di-set otomatis
+                delete newInit.headers['Content-Type'];
+                delete newInit.headers['content-type'];
+                newInit.body = form;
+                return prevFetch(input, newInit);
+              }
+            }
+          }catch(e){ /* abaikan & lanjut */ }
+        }
+      }
+    }catch(e){ /* pass-through */ }
+    return prevFetch(input, init);
+  };
+})();
+</script>
+
+<!-- =====================  ADDITIONS 7 (Service Rules + Pricing FIX)  ===================== -->
+<script>
+(function(){
+  const PRICE = { 'Thumbnail Design': 10000, 'Render Minecraft': 5000 };
+
+  const ART_OPTIONS = [
+    { value: 'Headshot Only', label: 'Headshot Only — Rp 25.000', price: 25000 },
+    { value: 'Half Body', label: 'Half Body — Rp 45.000', price: 45000 },
+    { value: 'Full Body', label: 'Full Body — Rp 55.000', price: 55000 }
+  ];
+
+  const GFX_OPTIONS = [
+    { value: 'Half Body', label: 'Half Body — Rp 25.000 + (sesuai kesulitan)', price: 25000 },
+    { value: 'Full Body', label: 'Full Body — Rp 35.000 + (sesuai kesulitan)', price: 35000 }
+  ];
+
+  // Default worker fallback
+  const DEFAULT_WORKER = { 'Thumbnail Design':'rgch.e', 'Art Render Style':'kenzu', 'Render Minecraft':'rgch.e' };
+
+  const rupiah = (n)=>{
+    try{ return new Intl.NumberFormat('id-ID',{style:'currency',currency:'IDR',maximumFractionDigits:0}).format(n); }
+    catch(e){ return 'Rp ' + String(n); }
+  };
+
+  const $ = (id)=>document.getElementById(id);
+  const show = (id,on)=>{ const el=$(id); if(el) el.style.display = on? 'block':'none'; };
+
+  function setOpts(sel, arr){
+    if(!sel) return;
+    const currentVal = sel.value; // simpan value lama jika ada
+    sel.innerHTML='';
+    arr.forEach(it=>{
+      const o=document.createElement('option');
+      o.value=it.value;
+      o.textContent=it.label;
+      o.dataset.price=String(it.price);
+      sel.appendChild(o);
+    });
+    // kembalikan value lama jika masih valid
+    if(arr.some(it=>it.value===currentVal)) sel.value=currentVal;
+  }
+
+  // --- LOGIKA UTAMA YANG DIUBAH ADA DI SINI ---
+  function allowedWorkers(service, mode){
+    // 1. Thumbnail Design -> Hanya rgch.e
+    if(service==='Thumbnail Design') return ['rgch.e'];
+
+    // 2. Art Render Style -> Hanya kenzu & axso
+    if(service==='Art Render Style') return ['kenzu','axso'];
+
+    // 3. Render Minecraft
+    if(service==='Render Minecraft'){
+      // Jika Mode GFX -> kenzu & axso
+      if(mode==='GFX') return ['kenzu','axso'];
+      // Jika Mode Biasa -> Hanya rgch.e
+      return ['rgch.e'];
+    }
+    
+    // Default fallback
+    return ['rgch.e','kenzu','axso'];
+  }
+
+  function applyWorkerRules(){
+    const service = $('woService')?.value || 'Thumbnail Design';
+    const mode = $('woRenderMode')?.value || 'Biasa';
+    const sel = $('woWorker');
+    if(!sel) return;
+
+    // Dapatkan list worker yang diperbolehkan berdasarkan logika baru
+    const allow = new Set(allowedWorkers(service, mode));
+
+    // Sembunyikan/Disable worker yang tidak sesuai
+    [...sel.options].forEach(o=>{
+      const ok = allow.has(o.value);
+      o.disabled = !ok;
+      o.hidden = !ok; // Sembunyikan dari dropdown
+    });
+
+    // Jika worker yang sedang dipilih sekarang tidak valid, ganti ke default yang valid
+    if(!allow.has(sel.value)){
+      // Prioritaskan rgch.e jika available, jika tidak ambil yang pertama dari list
+      const firstAvailable = [...allow][0];
+      sel.value = firstAvailable; 
+    }
+  }
+
+  function calc(){
+    const service = $('woService')?.value || 'Thumbnail Design';
+    const mode = $('woRenderMode')?.value || 'Biasa';
+    // const worker tidak mempengaruhi harga, tapi diambil untuk data
+    const worker = $('woWorker')?.value || 'rgch.e';
+    const qtyRaw = parseInt($('woQty')?.value || '1',10);
+    const qty = Math.max(1, Math.min(50, isNaN(qtyRaw)?1:qtyRaw));
+
+    let unit = 0;
+    let detailLabel = '';
+
+    if(service==='Thumbnail Design'){
+      unit = PRICE['Thumbnail Design'];
+    } else if(service==='Render Minecraft'){
+      if(mode==='Biasa'){
+        unit = PRICE['Render Minecraft'];
+      } else if(mode==='GFX'){
+        // Ambil harga dari dropdown Body Type GFX
+        const opt = $('woBodyType')?.selectedOptions?.[0];
+        const base = opt? (parseInt(opt.dataset.price||'0',10)||0) : 0;
+        const extra = Math.max(0, parseInt($('woDifficultyExtra')?.value||'0',10)||0);
+        unit = base + extra;
+        detailLabel = (opt? opt.value:'') + (extra>0? ` + extra ${rupiah(extra)}`:'');
+      }
+    } else if(service==='Art Render Style'){
+      // Ambil harga dari dropdown Body Type Art
+      const opt = $('woBodyType')?.selectedOptions?.[0];
+      unit = opt? (parseInt(opt.dataset.price||'0',10)||0) : 0;
+      detailLabel = opt? opt.value : '';
+    }
+
+    return { service, mode, worker, qty, unit, total: unit*qty, detailLabel };
+  }
+
+  function renderPrice(){
+    const totalEl = $('woTotalText');
+    const bdEl = $('woBreakdownText');
+    if(!totalEl || !bdEl) return;
+    const c = calc();
+    totalEl.textContent = rupiah(c.total);
+
+    let info = `Unit: <b>${rupiah(c.unit)}</b> × Qty: <b>${c.qty}</b>`;
+    
+    // Tambahan info detail text
+    if(c.service==='Render Minecraft'){
+      info = `Mode: <b>${c.mode}</b> • ` + info;
+      if(c.mode==='GFX' && c.detailLabel) info = `Pilihan: <b>${c.detailLabel}</b> • ` + info;
+    }
+    if(c.service==='Art Render Style' && c.detailLabel){
+      info = `Pilihan: <b>${c.detailLabel}</b> • ` + info;
+    }
+    bdEl.innerHTML = info;
+  }
+
+  function applyUI(){
+    const service = $('woService')?.value || 'Thumbnail Design';
+    const mode = $('woRenderMode')?.value || 'Biasa';
+
+    // Tampilkan dropdown Mode hanya jika Render Minecraft
+    show('woRenderModeGroup', service==='Render Minecraft');
+
+    const isArt = service==='Art Render Style';
+    const isGfx = (service==='Render Minecraft' && mode==='GFX');
+    const isRenderBiasa = (service==='Render Minecraft' && mode==='Biasa');
+
+    // Reset dan atur Opsi Body Type / Difficulty
+    if(isArt){
+      show('woBodyTypeGroup', true);
+      // Cek apakah opsi sekarang sudah ART_OPTIONS, jika belum set ulang
+      // (Kita cek kasar via jumlah opsi atau flag, tapi setOpts aman dipanggil ulang)
+      setOpts($('woBodyType'), ART_OPTIONS);
+      show('woDifficultyGroup', false);
+      if($('woDifficultyExtra')) $('woDifficultyExtra').value = 0;
+    } else if(isGfx){
+      show('woBodyTypeGroup', true);
+      setOpts($('woBodyType'), GFX_OPTIONS);
+      show('woDifficultyGroup', true);
+    } else {
+      // Thumbnail atau Render Biasa -> Tidak butuh body type options
+      show('woBodyTypeGroup', false);
+      if($('woBodyType')) $('woBodyType').innerHTML='';
+      show('woDifficultyGroup', false);
+      if($('woDifficultyExtra')) $('woDifficultyExtra').value = 0;
+    }
+
+    // TERAKHIR: Update worker list berdasarkan service & mode yang baru
+    applyWorkerRules();
+    
+    // Hitung harga ulang
+    renderPrice();
+  }
+
+  function bind(){
+    ['woService','woRenderMode','woWorker','woQty','woBodyType','woDifficultyExtra'].forEach(id=>{
+      const el = $(id);
+      if(!el) return;
+      // Gunakan 'change' agar UI terupdate saat user memilih
+      el.addEventListener('change', ()=>{
+        // Jika yang berubah service/mode, applyUI full (termasuk worker list)
+        if(id==='woService' || id==='woRenderMode') applyUI();
+        else renderPrice(); 
+      });
+      // Gunakan 'input' untuk update harga realtime (typing numbers)
+      if(el.tagName==='INPUT') el.addEventListener('input', renderPrice);
+    });
+    // Initial call
+    applyUI();
+  }
+
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', bind);
+  else bind();
+
+  // Expose global functions agar tombol Order Now bisa memicu update
+  window.__woCalc = calc;
+  window.__woRenderPrice = renderPrice;
+  window.__woApplyUI = applyUI;
+})();
+</script>
+
+<style>
+  .bottom-logo-wrap{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:18px 12px 28px;
+    background:transparent;
+  }
+  .bottom-logo-wrap img{
+    max-width:min(920px, 92vw);
+    height:auto;
+    display:block;
+    opacity:0.95;
+  }
+</style>
+
+<div class="bottom-logo-wrap">
+  <img src="foto/Tak berjudul33_20260224135926.png">
+</div>
+    <footer class="footer"><p>&copy; All Rights Reserved.</p></footer>
+</body>
+</html>
